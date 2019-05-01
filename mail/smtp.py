@@ -1,3 +1,4 @@
+import socket
 from smtplib import SMTP
 
 messages = {
@@ -29,10 +30,19 @@ messages = {
 }
 
 def getStatusOfSMTPServer(ip):
-    smtp = SMTP(ip)
-    status = smtp.noop()[0]
-    message = messages[status]
-    return  (" \\begin{itemize}" +
-			" \\item status: " + str(status) +
-			" \\item interpretacion: " + message +
-		    " \\end{itemize}")
+    socket.setdefaulttimeout(6)
+    try:
+        smtp = SMTP(ip)
+        status = smtp.noop()[0]
+        message = messages[status]
+        return  (" \\begin{itemize}" +
+                " \\item status: " + str(status) +
+                " \\item interpretacion: " + message +
+                " \\end{itemize}")
+    except:
+        status = "-"
+        message = "Failed to connect"
+    return (" \\begin{itemize}" +
+            " \\item status: " + str(status) +
+            " \\item interpretacion: " + message +
+            " \\end{itemize}")
