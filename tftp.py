@@ -16,7 +16,7 @@ str = """
 		\\begin{itemize}\n
 		\\item status: """ + obj['status'] + """\n
 		\\item interpretacion: OK\n
-		\\item download time: """ + obj['download_time'] + """
+		\\item download time: """ + obj['download_time'] + """\n
 		\\end{itemize}
 	"""
 print(str)
