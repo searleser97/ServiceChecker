@@ -1,4 +1,4 @@
-import imaplib, pprint, email, email.parser, time
+import imaplib, pprint, email, email.parser, time, timeit, threading
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP
@@ -7,6 +7,9 @@ numer_of_test = 0
 mail_user = "losmegas"
 mail_pass = "pepechido2"
 local_mail = mail_user + "@localhost.pepe"
+
+general_status = None
+general_message = None
 
 messages = {
     200 : "(nonstandard success response, see rfc876)",
@@ -37,6 +40,23 @@ messages = {
 }
 
 def getStatusOfSMTPServer(ip):
+    return getStatusOfSMTPServerRequest(ip, False)
+
+def getStatusOfSMTPServerMultipleclients(ip):
+    start = time.time()
+    threads = [threading.Thread(target=getStatusOfSMTPServerRequest, args=(ip, True)) for _ in range(20)]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+    smtp_response = round(time.time() - start, 2)
+    return (" \\begin{itemize}" +
+                " \\item status: " + str(general_status) +
+                " \\item interpretacion: " + general_message +
+                " \\item time response of 20 clients " + str(smtp_response) + " s"
+                " \\end{itemize}")
+
+def getStatusOfSMTPServerRequest(ip, isThread):
+    global general_status, general_message
+
     smtp_b_time = time.time()
     try:
         smtp = SMTP(ip, timeout=6)
@@ -51,17 +71,20 @@ def getStatusOfSMTPServer(ip):
         smtp_e_time = time.time()
         imap_time = 0
 
+    general_status = status
+    general_message = message
     smtp_response = round(smtp_e_time - smtp_b_time, 2)
     imap_response = round(imap_time,2)
     total_response = round(smtp_response + imap_response, 2)
 
-    return (" \\begin{itemize}" +
-            " \\item status: " + str(status) +
-            " \\item interpretacion: " + message +
-            " \\item time response of SMTP server: " + str(smtp_response) + " s"
-            " \\item time response of IMAP server: " + str(imap_response) + " s"
-            " \\item total response: " + str(total_response) + " s"
-            " \\end{itemize}")
+    if not isThread:
+        return (" \\begin{itemize}" +
+                " \\item status: " + str(status) +
+                " \\item interpretacion: " + message +
+                " \\item time response of SMTP server: " + str(smtp_response) + " s"
+                " \\item time response of IMAP server: " + str(imap_response) + " s"
+                " \\item total response: " + str(total_response) + " s"
+                " \\end{itemize}")
 
 def imapResponse(ip):
     imap_host = ip

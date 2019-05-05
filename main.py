@@ -1,7 +1,6 @@
-from mail.smtp import getStatusOfSMTPServer
+from mail.smtp import getStatusOfSMTPServer, getStatusOfSMTPServerMultipleclients
 
 mail_server = "192.168.1.69"
 
-mail_latex_response = getStatusOfSMTPServer(mail_server)
-
-print(mail_latex_response)
+print(getStatusOfSMTPServer(mail_server))
+print(getStatusOfSMTPServerMultipleclients(mail_server))
