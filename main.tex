@@ -12,6 +12,7 @@
 \usepackage{pdfpages}
 \usepackage{needspace}
 \usepackage{sectsty}
+\usepackage{placeins}
 
 \geometry{letterpaper, portrait, left=0.5cm, right=0.5cm, top=1.8cm, bottom=1cm}
 
@@ -21,6 +22,8 @@
 \setlength{\columnsep}{0.5cm}
 \setlength{\columnseprule}{0.01cm}
 \renewcommand{\columnseprulecolor}{\color{gray}}
+
+\newcommand{\wdir}[1]{/home/san/Documents/ESCOM/Redes3/ServiceChecker/#1}
 
 \pagestyle{fancy}
 \pagenumbering{arabic}
@@ -34,37 +37,35 @@
 \renewcommand{\footrulewidth}{0.01cm}
 
 \begin{document}
-% \includepdf{TitlePage.pdf}
+\includepdf{TitlePage.pdf}
 \fontfamily{lmss}
 \selectfont
 \tableofcontents
 \newpage
 
-\section{Supervisi\'on de servidores}
+\section{Supervisi\'on de servicios}
 
 \subsection{HTTP}
-\input{snmp/http_stats.tex}
-\begin{figure}[!htb]
-  \centering
-  \includegraphics[width=0.5\textwidth]{/home/san/Documents/ESCOM/Redes3/ServiceChecker/snmp/out/cpuhttp/trafico.png}
-  \caption{Gr\'afica de Actividad de CPU.}
-\end{figure}
+\input{\wdir{snmp/http_stats.tex}}
 
-% \section{Supervisi\'on de los servicios}
-
-% \subsection{TFTP}
-% \begin{python}[tftp/tftp.py]
-% \end{python}
-% \subsection{HTTP}
 % \begin{python}[http/http.py]
 % \end{python}
-% \subsection{SMTP}
+
+\subsection{TFTP}
+\input{\wdir{snmp/tftp_stats.tex}}
+% \begin{python}[tftp/tftp.py]
+% \end{python}
+\subsection{SMTP}
+\input{\wdir{snmp/mail_stats.tex}}
 % \begin{python}[mail/smtp.py]
 % \end{python}
-% \subsection{SSH}
+\subsection{SSH}
+\input{\wdir{snmp/ssh_stats.tex}}
 % \begin{python}[ssh/ssh.py]
 % \end{python}
-% \subsection{DNS}
+\subsection{DNS}
+\input{\wdir{snmp/dns_stats.tex}}
 % \begin{python}[dns/dns.py]
 % \end{python}
+
 \end{document}

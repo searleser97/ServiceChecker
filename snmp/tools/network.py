@@ -101,6 +101,9 @@ def getInterfaces(communityName, ip, port):
 def getProcesses(communityName, ip, port):
     return getSnmpInfo(communityName,ip,port, OIDPREFIX + OID.Processes.value)
 
+def getOs(communityName, ip, port):
+    return getSnmpInfo(communityName, ip, port, OIDPREFIX + OID.OS)
+
 def getDateAndTime(communityName, ip, port):
     snmpInfo = getSnmpInfo(communityName,ip,port, OIDPREFIX + OID.DateAndTime.value)
     year = int(snmpInfo[3:7], 16)

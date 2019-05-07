@@ -96,7 +96,7 @@ def __generateAllImages():
         rrdt.createRRDImage(traffic_db, current_time, "Equipo 12 traffic")
         time.sleep(30)
 
-def generateAllPredictions(community, ip, port, cpudb='out/cputftp', ramdb='out/ramtftp', hdddb='out/hddtftp'):
+def createPredictionsDbs(cpudb, ramdb, hdddb):
     global cpu_db
     global ram_db
     global hdd_db
@@ -106,18 +106,25 @@ def generateAllPredictions(community, ip, port, cpudb='out/cputftp', ramdb='out/
     rrdt.createPredictionDatabase(cpu_db)
     rrdt.createPredictionDatabase(ram_db)
     rrdt.createPredictionDatabase(hdd_db)
-    cpu = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixCPU', cpu_db), daemon=True)
-    hdd = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixHDD', hdd_db), daemon=True)
-    ram = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixAvaliableRam', ram_db, 'getUnixTotalRam'), daemon=True)
-    imgs = thr.Thread(target=__generatePredictionImages, daemon=True)
-    cpu.start()
-    hdd.start()
-    ram.start()
-    imgs.start()
-    cpu.join()
-    hdd.join()
-    ram.join()
-    imgs.join()
+
+def generateAllPredictions(community, ip, port, service_name='http', cpudb=None, ramdb=None, hdddb=None):
+    global cpu_db
+    global ram_db
+    global hdd_db
+    cpu_db = cpudb
+    ram_db = ramdb
+    hdd_db = hdddb
+    __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
+    __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
+    __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
+    __generatePredictionImages()
+    __generateInfoAsTex(community, ip, port, service_name)
+    # cpu = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixCPU', cpu_db), daemon=True)
+    # hdd = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixHDD', hdd_db), daemon=True)
+    # ram = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixAvaliableRam', ram_db, 'getUnixTotalRam'), daemon=True)
+    # imgs = thr.Thread(target=__generatePredictionImages, daemon=True)
+    # infoAsTex = thr.Thread(target=__generateInfoAsTex, args=(community, ip, port, service_name), daemon=True)
+    # return [cpu, hdd, ram, imgs, infoAsTex]
 
 def generateAllAberrations(community, ip, port):
     rrdt.createAberrationDatabase(abe_db)
@@ -130,7 +137,7 @@ def __generateGeneral(community, ip, port, method, db, method2=None):
             snmp_total_value = int(getattr(nt,method2)(community, ip, port))
         except ValueError:
             snmp_total_value = 0
-    while True:
+    if True:
         if method2:
             try:
                 snmp_pre_value = snmp_total_value - int(getattr(nt,method)(community, ip, port))
@@ -144,18 +151,51 @@ def __generateGeneral(community, ip, port, method, db, method2=None):
                 snmp_value = 0
         value = "N:" + str(snmp_value)
         rrdt.updateAndDumpRRDDatabase(db, value)
-        #time.sleep(5)
-        time.sleep(1)
+        # time.sleep(1)
 
 def __generatePredictionImages():
     current_time = str(int(time.time()))
-    while True:
+    if True:
         rrdt.createRRDPredictionImage(cpu_db, current_time, "CPU", "25", "50", "75")
         rrdt.createRRDPredictionImage(ram_db, current_time, "RAM", "25", "50", "75")
         rrdt.createRRDPredictionImage(hdd_db, current_time, "HDD", "25", "50", "75")
-        time.sleep(30)
+        # time.sleep(30)
 
 def __generateAberrationImages():
     while True:
         rrdt.createAberrationImage(abe_db)
         time.sleep(30)
+
+def __generateInfoAsTex(community, ip, port, service_name):
+    path = '/home/san/Documents/ESCOM/Redes3/ServiceChecker/snmp/'
+    if True:
+        print(service_name)
+        uptime = nt.getUpTime(community, ip, port)
+        interfaces = nt.getInterfaces(community, ip, port)
+        so = nt.getOS(community, ip, port).replace('_', '\\_').replace('#', '\\#')
+        print(service_name + ": ", uptime, interfaces, so)
+        with open(path + service_name + '_stats.tex', 'w') as f:
+            f.write('\\begin{itemize}\n')
+            f.write('\\item \\textbf{Sistema Operativo:} ' + so + '\n')
+            f.write('\\item \\textbf{Tiempo de actividad del sensor:} ' + str(uptime) + '\n')
+            f.write('\\item \\textbf{Numero de interfaces:} ' + str(len(interfaces)) + '\n')
+            f.write('\\end{itemize}' + '\n')
+            plots = (""
+            "\\begin{figure}[!htb]\n"
+            "\\minipage{0.33\\textwidth}\n"
+                "\\includegraphics[width=\\linewidth]{" + path + "out/cpu" + service_name + "/trafico.png}\n"
+                "\\caption{CPU}\\label{fig:awesome_image1}\n"
+            "\\endminipage\\hfill\n"
+            "\\minipage{0.33\\textwidth}\n"
+                "\\includegraphics[width=\\linewidth]{" + path + "out/hdd" + service_name + "/trafico.png}\n"
+                "\\caption{Disco Duro}\\label{fig:awesome_image2}\n"
+            "\\endminipage\\hfill\n"
+            "\\minipage{0.33\\textwidth}%\n"
+                "\\includegraphics[width=\\linewidth]{" + path + "out/ram" + service_name + "/trafico.png}\n"
+                "\\caption{Memoria Ram}\\label{fig:awesome_image3}\n"
+            "\\endminipage\n"
+            "\\end{figure}\n"
+            "\\FloatBarrier\n")
+            f.write(plots)
+        # time.sleep(5)
+    

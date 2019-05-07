@@ -56,10 +56,12 @@ def createRRDImage(path, initial_time, name):
                     "LINE1:outoctets#0000FF:Out Salientes\r")
 
 def createRRDPredictionImage(path, initial_time, type_data, u1, u2, u3):
+    # initial_time = int(initial_time) - 3600
     initial_time = int(initial_time) - 3600
     rg = rrdtool.graphv(  path + "/trafico.png",
                     "--start", str(initial_time),
-                    "--end", '+3600s',
+                    # "--end", '+3600s',
+                    "--end", '+1s',
                     "--vertical-label=Porcentaje",
                     '--lower-limit', '0',
                     '--upper-limit', '100',
