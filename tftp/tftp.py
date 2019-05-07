@@ -1,10 +1,11 @@
 import tftpy
 import timeit
 obj = {}
+server = 'localhost'
+port = 69
 try:
-	client = tftpy.TftpClient('localhosts', 69)
+	client = tftpy.TftpClient(server, port)
 	obj['status'] = 'Up'
-
 	start = timeit.timeit()
 	client.download('test.txt', 'test.txt')
 	end = timeit.timeit()
@@ -15,7 +16,6 @@ except:
 str = """
 		\\begin{itemize}\n
 		\\item status: """ + obj['status'] + """\n
-		\\item interpretacion: OK\n
 		\\item download time: """ + obj['download_time'] + """\n
 		\\end{itemize}
 	"""

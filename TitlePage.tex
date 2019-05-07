@@ -4,6 +4,7 @@
 \usepackage{epigraph}
 \usepackage{lipsum}
 \usepackage{geometry}
+\usepackage[ddmmyyyy, hhmmss]{datetime}
 
 % The following code is borrowed from: https://tex.stackexchange.com/a/86310/10898
 \definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
@@ -56,38 +57,41 @@
 \renewcommand\epigraphsize{\normalsize}
 \setlength\epigraphwidth{1\textwidth}
 
-\DeclareFixedFont{\titlefont}{T1}{lmss}{b}{}{78pt}
+\DeclareFixedFont{\titlefont}{T1}{lmss}{b}{}{65pt}
 
 \begin{document}
 \begin{titlepage}
   \begin{center}
     \noindent
     \titlefont
-    Monitoreo\\[70pt]
-    de Servicios \\[70pt]
-    en Red \\[70pt]
+    Administraci\'on\\[70pt]
+    De\\[70pt]
+    Rendimiento\\[70pt]
 
     \epigraph{
       \centering
       \fontfamily{lmss}
       \selectfont
       \Large
-      First, solve the problem. Then, write the code.
+      Equipo Archivos
     }
     {
       \centering
       \fontfamily{lmss}
       \selectfont
       \Large
-      John Johnson
+      \today, \currenttime
     }
     \null\vfill
     \fontfamily{lmss}
     \selectfont
-    \large By \\[8pt]
+    \large Por \\[8pt]
     \Large Sergio Gabriel Sanchez Valencia \\[8pt]
-    \Large gabrielsanv97@gmail.com \\[8pt]
-    \Large searleser97
+    \Large Jose Manuel Calva Hernandez \\[8pt]
+    \Large gobber \\[8pt]
+    \Large Jose Mtz \\[8pt]
+    \Large Mahurt \\[8pt]
+    \Large Alexis
   \end{center}
   \titlepagedecoration
 \end{titlepage}
