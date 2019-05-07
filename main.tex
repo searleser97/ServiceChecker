@@ -34,25 +34,37 @@
 \renewcommand{\footrulewidth}{0.01cm}
 
 \begin{document}
-\includepdf{TitlePage.pdf}
+% \includepdf{TitlePage.pdf}
 \fontfamily{lmss}
 \selectfont
 \tableofcontents
 \newpage
 
-\section{TFTP}
-\begin{python}[tftp/tftp.py]
-\end{python}
-\section{HTTP}
-\begin{python}[http/http.py]
-\end{python}
-\section{SMTP}
-\begin{python}[mail/smtp.py]
-\end{python}
-\section{SSH}
-\begin{python}[ssh/ssh.py]
-\end{python}
-\section{DNS}
-\begin{python}[dns/dns.py]
-\end{python}
+\section{Supervisi\'on de servidores}
+
+\subsection{HTTP}
+\input{snmp/http_stats.tex}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=0.5\textwidth]{/home/san/Documents/ESCOM/Redes3/ServiceChecker/snmp/out/cpuhttp/trafico.png}
+  \caption{Gr\'afica de Actividad de CPU.}
+\end{figure}
+
+% \section{Supervisi\'on de los servicios}
+
+% \subsection{TFTP}
+% \begin{python}[tftp/tftp.py]
+% \end{python}
+% \subsection{HTTP}
+% \begin{python}[http/http.py]
+% \end{python}
+% \subsection{SMTP}
+% \begin{python}[mail/smtp.py]
+% \end{python}
+% \subsection{SSH}
+% \begin{python}[ssh/ssh.py]
+% \end{python}
+% \subsection{DNS}
+% \begin{python}[dns/dns.py]
+% \end{python}
 \end{document}

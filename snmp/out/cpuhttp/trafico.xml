@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rrd SYSTEM "http://oss.oetiker.ch/rrdtool/rrdtool.dtd">
+<!-- Round Robin Database Dump -->
+<rrd>
+	<version>0003</version>
+	<step>60</step> <!-- Seconds -->
+	<lastupdate>1557202758</lastupdate> <!-- 2019-05-06 23:19:18 CDT -->
+
+	<ds>
+		<name> CPUload </name>
+		<type> GAUGE </type>
+		<minimal_heartbeat>600</minimal_heartbeat>
+		<min>NaN</min>
+		<max>NaN</max>
+
+		<!-- PDP Status -->
+		<last_ds>26</last_ds>
+		<value>4.6558849400e+02</value>
+		<unknown_sec> 0 </unknown_sec>
+	</ds>
+
+	<!-- Round Robin Archives -->
+	<rra>
+		<cf>AVERAGE</cf>
+		<pdp_per_row>1</pdp_per_row> <!-- 60 seconds -->
+
+		<params>
+		<xff>5.0000000000e-01</xff>
+		</params>
+		<cdp_prep>
+			<ds>
+			<primary_value>1.9507863817e+01</primary_value>
+			<secondary_value>0.0000000000e+00</secondary_value>
+			<value>NaN</value>
+			<unknown_datapoints>0</unknown_datapoints>
+			</ds>
+		</cdp_prep>
+		<database>
+			<!-- 2019-05-06 22:56:00 CDT / 1557201360 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 22:57:00 CDT / 1557201420 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 22:58:00 CDT / 1557201480 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 22:59:00 CDT / 1557201540 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:00:00 CDT / 1557201600 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:01:00 CDT / 1557201660 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:02:00 CDT / 1557201720 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:03:00 CDT / 1557201780 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:04:00 CDT / 1557201840 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:05:00 CDT / 1557201900 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:06:00 CDT / 1557201960 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:07:00 CDT / 1557202020 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:08:00 CDT / 1557202080 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:09:00 CDT / 1557202140 --> <row><v>NaN</v></row>
+			<!-- 2019-05-06 23:10:00 CDT / 1557202200 --> <row><v>2.6069313667e+01</v></row>
+			<!-- 2019-05-06 23:11:00 CDT / 1557202260 --> <row><v>1.9006863533e+01</v></row>
+			<!-- 2019-05-06 23:12:00 CDT / 1557202320 --> <row><v>1.9353095217e+01</v></row>
+			<!-- 2019-05-06 23:13:00 CDT / 1557202380 --> <row><v>2.6449884850e+01</v></row>
+			<!-- 2019-05-06 23:14:00 CDT / 1557202440 --> <row><v>1.7992990533e+01</v></row>
+			<!-- 2019-05-06 23:15:00 CDT / 1557202500 --> <row><v>2.4484911550e+01</v></row>
+			<!-- 2019-05-06 23:16:00 CDT / 1557202560 --> <row><v>2.9451694750e+01</v></row>
+			<!-- 2019-05-06 23:17:00 CDT / 1557202620 --> <row><v>2.4671991667e+01</v></row>
+			<!-- 2019-05-06 23:18:00 CDT / 1557202680 --> <row><v>2.7169028167e+01</v></row>
+			<!-- 2019-05-06 23:19:00 CDT / 1557202740 --> <row><v>1.9507863817e+01</v></row>
+		</database>
+	</rra>
+</rrd>
