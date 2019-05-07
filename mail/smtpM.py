@@ -40,7 +40,7 @@ messages = {
 }
 
 def getStatusOfSMTPServer(ip):
-    getStatusOfSMTPServerRequest(ip, False)
+    return getStatusOfSMTPServerRequest(ip, False)
 
 def getStatusOfSMTPServerMultipleclients(ip):
     start = time.time()
@@ -123,4 +123,4 @@ def sendEmail(connection):
     numer_of_test += 1
     connection.send_message(msg)
 
-getStatusOfSMTPServer('192.168.1.68')
+getStatusOfSMTPServerMultipleclients('192.168.1.68')
