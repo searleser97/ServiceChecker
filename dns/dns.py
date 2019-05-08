@@ -33,9 +33,9 @@ def getIPbyURI(target = 'localhost', port = None):
 
     return (" \\begin{itemize}" +
             " \\item URI: " + str(target) +
-            " \\item IP related: " + 
-            ("Down" if (not result) else ("\\begin{itemize}" + " \\item " + " \\item ".join(result) + " \\end{itemize}")) +
-            " \\item total response: " + str(round(end - start, 2)) + 
+            " \\item IP associata: " + 
+            ("Caduto" if (not result) else ("\\begin{itemize}" + " \\item " + " \\item ".join(result) + " \\end{itemize}")) +
+            " \\item Tempo di risposta: " + str(round(end - start, 2)) + 
             " \\end{itemize}")
 
 ips = getIPbyURI(target = 'aula1pc1.test.try')
