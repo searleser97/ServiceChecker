@@ -59,7 +59,7 @@ def main():
     password = 'melasudasenr2yr3'
     make_connection(hostname, username, password, port)
 
-def get_status_ssh_server_multiple_requests(ip):
+def get_status_ssh_server_multiple_requests():
 	start = time.time()
 	threads = [threading.Thread(target=main) for _ in range(10)]
 	[t.start() for t in threads]
@@ -72,4 +72,4 @@ def get_status_ssh_server_multiple_requests(ip):
            " \\end{itemize}")
 
 if __name__ == "__main__":
-    main()
+    get_status_ssh_server_multiple_requests()
