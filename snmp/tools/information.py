@@ -115,8 +115,8 @@ def generateAllPredictions(community, ip, port, service_name='http', cpudb=None,
     ram_db = ramdb
     hdd_db = hdddb
     __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
-    __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
-    __generateGeneral(community, ip, port,'getUnixCPU', cpu_db)
+    __generateGeneral(community, ip, port,'getUnixHDD', hdd_db)
+    __generateGeneral(community, ip, port,'getUnixAvaliableRam', ram_db, 'getUnixTotalRam')
     __generatePredictionImages()
     __generateInfoAsTex(community, ip, port, service_name)
     # cpu = thr.Thread(target=__generateGeneral, args=(community, ip, port,'getUnixCPU', cpu_db), daemon=True)
@@ -184,15 +184,15 @@ def __generateInfoAsTex(community, ip, port, service_name):
             "\\begin{figure}[!htb]\n"
             "\\minipage{0.33\\textwidth}\n"
                 "\\includegraphics[width=\\linewidth]{" + path + "out/cpu" + service_name + "/trafico.png}\n"
-                "\\caption{CPU}\\label{fig:awesome_image1}\n"
+                "\\caption{CPU}\n"
             "\\endminipage\\hfill\n"
             "\\minipage{0.33\\textwidth}\n"
                 "\\includegraphics[width=\\linewidth]{" + path + "out/hdd" + service_name + "/trafico.png}\n"
-                "\\caption{Disco Duro}\\label{fig:awesome_image2}\n"
+                "\\caption{Disco Duro}\n"
             "\\endminipage\\hfill\n"
             "\\minipage{0.33\\textwidth}%\n"
                 "\\includegraphics[width=\\linewidth]{" + path + "out/ram" + service_name + "/trafico.png}\n"
-                "\\caption{Memoria Ram}\\label{fig:awesome_image3}\n"
+                "\\caption{Memoria Ram}\n"
             "\\endminipage\n"
             "\\end{figure}\n"
             "\\FloatBarrier\n")

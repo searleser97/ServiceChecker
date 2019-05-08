@@ -50,5 +50,5 @@ def main():
     password = ''
     make_connection(hostname, username, password, port)
 
-if __name__ == "__main__":
-    main()
+
+main()

@@ -57,7 +57,7 @@ def createRRDImage(path, initial_time, name):
 
 def createRRDPredictionImage(path, initial_time, type_data, u1, u2, u3):
     # initial_time = int(initial_time) - 3600
-    initial_time = int(initial_time) - 3600
+    initial_time = int(initial_time) - 800
     rg = rrdtool.graphv(  path + "/trafico.png",
                     "--start", str(initial_time),
                     # "--end", '+3600s',
