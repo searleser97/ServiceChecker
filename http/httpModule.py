@@ -1,10 +1,11 @@
-import http.client, time, sys
+import http.client, time, sys, threading
 
 general_result = None
+general_size = None
 
 def getHTTPConnection(ip = "www.google.com", isThread = False):
 
-    global general_result
+    global general_result, general_size
 
     start = time.time()
 
@@ -27,10 +28,10 @@ def getHTTPConnection(ip = "www.google.com", isThread = False):
         # print(str(round((totalSize / finalTime) / (10 ** 6), 6)))
 
     except:
-        result = None
+        totalSize = None
 
     # print(dns_answer)
-    # print(result)
+    # print(totalSize)
 
     end = time.time()
 
@@ -39,29 +40,30 @@ def getHTTPConnection(ip = "www.google.com", isThread = False):
     if not isThread:
         print (" \\begin{itemize}" +
             " \\item target: " + str(ip) +
-            " \\item status: " + ("Up" if (not result) else "Down") +            
+            " \\item status: " + ("Down" if (not totalSize) else "Up") +            
             " \\item tiempo de respuesta: " + str(finalTime) + 
             " \\item bytes recibidos: " + str(totalSize) + 
             " \\item ancho de banda: " + str(round((totalSize / finalTime) / (10 ** 6), 6)) + 
             " \\end{itemize}")
     
     else:
-        general_result = result
+        general_size = totalSize
 
-# def getHTTPConnectionMultipleclients(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1", numberOfClients = 20):
-#     start = time.time()
-#     threads = [threading.Thread(target=getIPbyURI, args=(targetURI, port, resolverDNS, True)) for _ in range(numberOfClients)]
-#     [t.start() for t in threads]
-#     [t.join() for t in threads]
-#     end = time.time()
-#     print (" \\begin{itemize}" +
-#             " \\item URI: " + str(targetURI) +
-#             " \\item IP associata: " + 
-#             ("Caduto" if (not general_result) else ("\\begin{itemize}" + " \\item " + " \\item ".join(general_result) + " \\end{itemize}")) +
-#             " \\item Tempo di risposta di " + str(numberOfClients) + " clienti: " + str(round(end - start, 2)) + 
-#             " \\end{itemize}")
+def getHTTPConnectionMultipleclients(ip = "www.google.com", numberOfClients = 20):
+    start = time.time()
+    threads = [threading.Thread(target=getHTTPConnection, args=(ip, True)) for _ in range(numberOfClients)]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+    end = time.time()
+    print (" \\begin{itemize}" +
+        " \\item target: " + str(ip) +
+        " \\item status: " + ("Down" if (not general_size) else "Up") +            
+        " \\item tiempo de respuesta de " + str(numberOfClients) + " clientes: " + str(round(end - start, 2)) + 
+        " \\item bytes recibidos: " + str(general_size) + 
+        " \\item ancho de banda: " + str(round((general_size / (end - start)) / (10 ** 6), 6)) + 
+        " \\end{itemize}")
 
 
 
 getHTTPConnection(ip = "www.google.com")
-# getIPbyURIMultipleclients(targetURI = 'aula1pc1.test.try', resolverDNS = "127.0.0.1", numberOfClients = 1000)
+# getHTTPConnectionMultipleclients(ip = "www.google.com", numberOfClients = 10)
