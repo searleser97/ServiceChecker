@@ -1,7 +1,9 @@
 import dns.resolver
-import socket, time
+import socket, time, threading
 
-def getIPbyURI(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1"):
+general_result = None
+
+def getIPbyURI(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1", isThread = False):
     '''
         this function takes the passed target and optional port and does a dns
         lookup. it returns the ips that it finds to the caller.
@@ -16,8 +18,8 @@ def getIPbyURI(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1"):
         :rtype latexString:     string
 
     '''
-    
-    socket.setdefaulttimeout(10)
+
+    global general_result
 
     customResolver = dns.resolver.Resolver()
     customResolver.nameservers = [resolverDNS]
@@ -47,13 +49,31 @@ def getIPbyURI(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1"):
 
     end = time.time()
 
-    return (" \\begin{itemize}" +
+    if not isThread:
+        print (" \\begin{itemize}" +
             " \\item URI: " + str(targetURI) +
             " \\item IP associata: " + 
             ("Caduto" if (not result) else ("\\begin{itemize}" + " \\item " + " \\item ".join(result) + " \\end{itemize}")) +
             " \\item Tempo di risposta: " + str(round(end - start, 2)) + 
             " \\end{itemize}")
+    
+    else:
+        general_result = result
 
-ips = getIPbyURI(targetURI = 'aula1pc1.test.try', resolverDNS = "127.0.0.1")
+def getIPbyURIMultipleclients(targetURI = 'localhost', port = None, resolverDNS = "127.0.0.1", numberOfClients = 20):
+    start = time.time()
+    threads = [threading.Thread(target=getIPbyURI, args=(targetURI, port, resolverDNS, True)) for _ in range(numberOfClients)]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+    end = time.time()
+    print (" \\begin{itemize}" +
+            " \\item URI: " + str(targetURI) +
+            " \\item IP associata: " + 
+            ("Caduto" if (not general_result) else ("\\begin{itemize}" + " \\item " + " \\item ".join(general_result) + " \\end{itemize}")) +
+            " \\item Tempo di risposta di " + str(numberOfClients) + " clienti: " + str(round(end - start, 2)) + 
+            " \\end{itemize}")
 
-print (ips)
+
+
+getIPbyURI(targetURI = 'aula1pc1.test.try', resolverDNS = "127.0.0.1")
+# getIPbyURIMultipleclients(targetURI = 'aula1pc1.test.try', resolverDNS = "127.0.0.1", numberOfClients = 1000)
